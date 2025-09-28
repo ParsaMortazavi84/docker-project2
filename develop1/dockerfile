@@ -1,0 +1,5 @@
+FRom ubuntu:22.04
+
+WORKDIR ./app
+
+COPY script.py .
