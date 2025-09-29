@@ -1,0 +1,27 @@
+FROM ubuntu:22.04
+
+RUN apt-get update && \
+    apt-get install -y openssh-server openssh-client sudo && \
+    mkdir /var/run/sshd
+
+WORKDIR /app
+
+
+COPY password.txt .
+
+
+RUN useradd -m -s /bin/bash jumpuser && \
+    usermod -aG sudo jumpuser && \
+    echo "jumpuser:$(cat /app/password.txt)" | chpasswd 
+    
+RUN mkdir /home/jumpuser/.ssh && \
+    touch /home/jumpuser/.ssh/authorized_keys && \
+    chown -R jumpuser:jumpuser /home/jumpuser/.ssh && \
+    chmod 700 /home/jumpuser/.ssh && \
+    chmod 600 /home/jumpuser/.ssh/authorized_keys
+
+RUN sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin no/' /etc/ssh/sshd_config && \
+    sed -i 's/#PasswordAuthentication yes/PasswordAuthentication yes/' /etc/ssh/sshd_config && \
+    echo "AllowAgentForwarding yes" >> /etc/ssh/sshd_config
+
+
