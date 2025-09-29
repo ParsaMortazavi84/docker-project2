@@ -1,5 +1,17 @@
-FRom ubuntu:22.04
+FROM python:3.11-slim
 
-WORKDIR ./app
+
+RUN apt-get update && apt-get install -y \
+    openssh-client \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN pip install --no-cache-dir paramiko
+
+
+
+WORKDIR /app
 
 COPY script.py .
+
+
+CMD ["python", "script.py"]
