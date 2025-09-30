@@ -1,0 +1,6 @@
+quote==3.0
+fastapi==0.116.1
+loguru== 0.7.3
+pydantic==2.11.7
+requests==2.32.5
+paramiko==4.0.0

@@ -1,5 +1,6 @@
 ./develop1/.idea/
 ./jump-server/password.txt
+myApiKey.txt
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
