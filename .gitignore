@@ -1,6 +1,6 @@
 password.txt
 myApiKey.txt
-
+passwords/
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[codz]

@@ -1,0 +1,45 @@
+version: "3.9"
+
+services:
+  jump-server:
+    image:
+      jump-server:latest
+    build:
+      context: .
+      dockerfile: ./jump-server/dockerfile
+    container_name: jump-server
+    ports:
+      - "2222:22"
+    networks:
+      - app-network
+
+  stage-server:
+    image:
+      stage-server:latest
+    build:
+      context: .    
+      dockerfile: ./stage-server/dockerfile
+    container_name: stage-server
+    ports:
+      - "8000:8000"
+      - "2223:22"
+    networks:
+      - app-network
+  dev1:
+    image:
+      dev1-server:latest
+    build:
+      context: .
+      dockerfile: ./develop1/dockerfile
+    container_name: dev1
+    ports:
+      - "10000:22"
+    depends_on:
+      - jump-server
+      - stage-server
+    networks:
+      - app-network
+
+networks:
+  app-network:    
+    driver: bridge
