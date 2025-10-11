@@ -6,7 +6,7 @@ services:
       jump-server:latest
     build:
       context: .
-      dockerfile: ./jump-server/dockerfile
+      dockerfile: ./jump-server/Dockerfile
     container_name: jump-server
     ports:
       - "2222:22"
@@ -18,7 +18,7 @@ services:
       stage-server:latest
     build:
       context: .    
-      dockerfile: ./stage-server/dockerfile
+      dockerfile: ./stage-server/Dockerfile
     container_name: stage-server
     ports:
       - "8000:8000"
@@ -30,7 +30,7 @@ services:
       dev1-server:latest
     build:
       context: .
-      dockerfile: ./develop1/dockerfile
+      dockerfile: ./develop1/Dockerfile
     container_name: dev1
     ports:
       - "10000:22"
