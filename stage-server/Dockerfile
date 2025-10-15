@@ -2,7 +2,6 @@ FROM ubuntu:22.04
 
 WORKDIR /app
 
-# نصب Python، pip، SSH server و ابزارهای ضروری
 RUN apt-get update && \
     apt-get install -y python3 python3-pip python3-venv openssh-server sudo curl && \
     apt-get clean && rm -rf /var/lib/apt/lists/*
@@ -39,7 +38,6 @@ RUN chmod 600 /home/$STAGE_USER/.ssh/dev1.pub
 
 
 RUN sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin no/' /etc/ssh/sshd_config && \
-    sed -i 's/#PasswordAuthentication yes/PasswordAuthentication yes/' /etc/ssh/sshd_config && \
     echo "AllowAgentForwarding yes" >> /etc/ssh/sshd_config
 
 COPY ./stage-server/requirements.txt .

@@ -24,7 +24,7 @@ COPY ./develop1/requirements.txt .
 RUN pip3 install --no-cache-dir -r requirements.txt
 
 COPY /develop1/script.py .
-COPY . .
+COPY ./develop1 .
 
 
 CMD ["python3", "script.py"]

@@ -33,7 +33,6 @@ RUN cat /home/jumpuser/.ssh/dev1.pub >> /home/jumpuser/.ssh/authorized_keys && \
 
 
 RUN sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin no/' /etc/ssh/sshd_config && \
-    sed -i 's/#PasswordAuthentication yes/PasswordAuthentication yes/' /etc/ssh/sshd_config && \
     echo "AllowAgentForwarding yes" >> /etc/ssh/sshd_config
 
 EXPOSE 22
