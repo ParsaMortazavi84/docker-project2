@@ -2,7 +2,7 @@ version: "3.9"
 
 services:
   jump-server:
-    image:
+    image: 
       jump-server:latest
     build:
       context: .
@@ -14,7 +14,7 @@ services:
       - app-network
 
   stage-server:
-    image:
+    image: 
       stage-server:latest
     build:
       context: .    
@@ -26,7 +26,8 @@ services:
     networks:
       - app-network
   dev1:
-    image:
+    entrypoint: tail -f /dev/null
+    image: 
       dev1-server:latest
     build:
       context: .
@@ -39,6 +40,23 @@ services:
       - stage-server
     networks:
       - app-network
+  dev2:
+    entrypoint: tail -f /dev/null
+    image: 
+      dev2-server:latest
+    build:
+      context: .
+      dockerfile: ./develop2/Dockerfile
+    container_name: dev2
+    ports:
+      - "10001:22"
+    depends_on:
+      - jump-server
+      - stage-server
+    networks:
+      - app-network
+
+
 
 networks:
   app-network:    

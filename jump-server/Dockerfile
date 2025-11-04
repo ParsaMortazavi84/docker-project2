@@ -23,9 +23,10 @@ RUN mkdir /home/jumpuser/.ssh && \
 COPY ./jump-server/passwords/jump-server /home/jumpuser/.ssh/jump-server
 COPY ./jump-server/passwords/jump-server.pub /home/jumpuser/.ssh/jump-server.pub
 COPY ./jump-server/passwords/dev1.pub /home/jumpuser/.ssh/dev1.pub
-
+COPY ./jump-server/passwords/dev2.pub /home/jumpuser/.ssh/dev2.pub
 
 RUN cat /home/jumpuser/.ssh/dev1.pub >> /home/jumpuser/.ssh/authorized_keys && \
+    cat /home/jumpuser/.ssh/dev2.pub >> /home/jumpuser/.ssh/authorized_keys && \
     chmod 600 /home/jumpuser/.ssh/jump-server && \
     chmod 644 /home/jumpuser/.ssh/jump-server.pub && \
     chmod 644 /home/jumpuser/.ssh/dev1.pub && \
