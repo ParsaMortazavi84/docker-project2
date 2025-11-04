@@ -31,10 +31,17 @@ COPY ./stage-server/passwords/stage-server /home/$STAGE_USER/.ssh/
 # but the jump-server's key not necessary to be in the athorized key of stage server
 ## the addreess which is in the dir of the command which we want to run in the docker file is run in the container in the run time should be the dir which is exist in the container 
 COPY ./stage-server/passwords/dev1.pub /home/$STAGE_USER/.ssh/dev1.pub
-RUN cat /home/$STAGE_USER/.ssh/dev1.pub >> /home/$STAGE_USER/.ssh/authorized_keys
-RUN chown $STAGE_USER:$STAGE_USER /home/$STAGE_USER/.ssh/dev1.pub
-RUN chmod 600 /home/$STAGE_USER/.ssh/dev1.pub
+COPY ./stage-server/passwords/dev2.pub /home/$STAGE_USER/.ssh/dev2.pub
 
+
+
+RUN cat /home/$STAGE_USER/.ssh/dev1.pub >> /home/$STAGE_USER/.ssh/authorized_keys
+RUN cat /home/$STAGE_USER/.ssh/dev2.pub >> /home/$STAGE_USER/.ssh/authorized_keys
+RUN chown $STAGE_USER:$STAGE_USER /home/$STAGE_USER/.ssh/dev1.pub
+RUN chown $STAGE_USER:$STAGE_USER /home/$STAGE_USER/.ssh/dev2.pub
+
+RUN chmod 600 /home/$STAGE_USER/.ssh/dev1.pub
+RUN chmod 600 /home/$STAGE_USER/.ssh/dev2.pub
 
 
 RUN sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin no/' /etc/ssh/sshd_config && \
