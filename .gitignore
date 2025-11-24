@@ -6,7 +6,8 @@ passwords/
 __pycache__/
 *.py[codz]
 *$py.class
-
+code.txt
+codeCurlForPostApi.txt
 # C extensions
 *.so
 

@@ -16,10 +16,6 @@ RUN chmod 600 /root/.ssh/dev1 && \
     chown root:root /root/.ssh/dev1 /root/.ssh/dev1.pub
 
 
-COPY ./develop1/entrypoint.sh ./entrypoint.sh
-RUN chmod +x entrypoint.sh
-ENTRYPOINT ["./entrypoint.sh"]
-
 COPY ./develop1/requirements.txt .
 RUN pip3 install --no-cache-dir -r requirements.txt
 

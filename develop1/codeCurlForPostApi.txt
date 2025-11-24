@@ -1,3 +1,0 @@
-curl -X POST http://localhost:8000/weather \
-     -H "Content-Type: application/json" \
-     -d '{"location": "Tehran"}'
