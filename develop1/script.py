@@ -3,6 +3,7 @@ import socket
 import select
 import threading
 import time
+import os, subprocess, re
 from paramiko.agent import AgentRequestHandler
 
 JUMP_HOST = "jump-server"
@@ -11,7 +12,24 @@ STAGE_HOST = "stage-server"
 STAGE_PORT = 8000
 LOCAL_PORT = 8000
 WAIT_TIME = 5
+key_path = "/root/.ssh/dev1"
 
+def start_agent():
+    output = subprocess.check_output(["ssh-agent", "-s"]).decode()
+
+    socket = re.search(r'SSH_AUTH_SOCK=([^;]+)', output).group(1)
+    pid = re.search(r'SSH_AGENT_PID=([^;]+)', output).group(1)
+
+
+    os.environ["SSH_AUTH_SOCK"] = socket
+    os.environ["SSH_AGENT_PID"] = pid
+
+    print("[+] Embedded SSH agent started.")
+    print("[+] Agent socket:", socket)
+
+def ssh_add():
+    subprocess.run(["ssh-add", key_path], check=True)
+    agent = paramiko.Agent()
 
 def handler(chan, sock):
     while True:
@@ -44,13 +62,18 @@ def forward_tunnel(local_port, remote_host, remote_port, transport):
         threading.Thread(target=handler, args=(chan, client), daemon=True).start()
 
 
+
+
+start_agent()
+ssh_add()
+
 while True:
     try:
         print("[+] Connecting to jump server...")
         jump = paramiko.SSHClient()
         jump.set_missing_host_key_policy(paramiko.AutoAddPolicy())
 
-        jump.connect(JUMP_HOST, username=JUMP_USER, port=22, allow_agent=True, look_for_keys=True)
+        jump.connect(JUMP_HOST, username=JUMP_USER, port=22, allow_agent=True, look_for_keys=False)
         print("[+] Connected to jump server.")
 
         jump_transport = jump.get_transport()

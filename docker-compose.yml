@@ -12,6 +12,7 @@ services:
       - "2222:22"
     networks:
       - app-network
+      - app2-network
 
   stage-server:
     image: 
@@ -27,11 +28,7 @@ services:
       - app-network
   dev1:
     entrypoint: tail -f /dev/null
-<<<<<<< HEAD
-    image:
-=======
     image: 
->>>>>>> v2.0
       dev1-server:latest
     build:
       context: .
@@ -43,7 +40,7 @@ services:
       - jump-server
       - stage-server
     networks:
-      - app-network
+      - app2-network
   dev2:
     entrypoint: tail -f /dev/null
     image: 
@@ -58,10 +55,13 @@ services:
       - jump-server
       - stage-server
     networks:
-      - app-network
+      - app2-network
 
 
 
 networks:
   app-network:    
     driver: bridge
+  app2-network:
+    driver: bridge
+  
